@@ -21,9 +21,15 @@
 	</update>
 	
 	<delete id="delmember" parameterType="com.example.vo.MemberVO">
-		DELETE FROM MEMBER WHERE USERID=#{userid}
+		DELETE * FROM MEMBER WHERE USERID=#{userid}
 	</delete>
-
+	
+	<delete id="deleteMemberBatch" parameterType="String">
+		<foreach open="DELETE FROM MEMBER WHERE USERID IN(" close=")" collection="array" item="tmp" separator=",">
+			#{tmp}
+		</foreach>
+	</delete>
+	
 	<select id="memberOne" parameterType="com.example.vo.MemberVO" resultType="com.example.vo.MemberVO">
 		SELECT * FROM MEMBER WHERE USERId=#{userid}
 	</select>
