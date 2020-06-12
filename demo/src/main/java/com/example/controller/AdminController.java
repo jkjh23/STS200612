@@ -93,6 +93,11 @@ public class AdminController {
 		return "redirect:/admin/item";	
 	}
 	
+	@RequestMapping(value = "/iteminsert")
+	public String iteminsert() {
+		return "/admin/iteminsert";
+	}
+	
 	@RequestMapping(value = "/iteminsert", method=RequestMethod.POST)
 	public String iteminsertpost(
 			@RequestParam("name[]") String[] name, 
