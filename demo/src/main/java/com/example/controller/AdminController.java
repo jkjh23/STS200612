@@ -48,6 +48,12 @@ public class AdminController {
 		return "redirect:/admin/member";
 	}
 	
+	@RequestMapping(value = "/itemorder")
+	public String itemorder() {
+		return "/admin/itemorder";
+	}
+	
+	
 	@RequestMapping(value = "/home")
 	public String home() {
 		return "/admin/home";
@@ -75,6 +81,14 @@ public class AdminController {
 			return "redirect:/admin/itemupdate";
 		}
 		
+		return "redirect:/admin/item";
+	}
+
+	// http://127.0.0.1:8080/admin/itemdeleteone?no=3
+	@RequestMapping(value="/itemdeleteone")
+	public String itemdeleteone(@RequestParam(value = "no", defaultValue = "0") int no) {
+		// DAO로 전달해서 삭제
+		iDAO.deleteItemOne(no);
 		return "redirect:/admin/item";
 	}
 	

@@ -8,6 +8,7 @@ import com.example.vo.BoardVO;
 public interface BoardDAO {
 	public int insertBoard(BoardVO obj);		// 글쓰기
 	public List<BoardVO> selectBoard(HashMap<String, Object> map);
+	public List<BoardVO> selectBoard2(HashMap<String, Object> map);
 	public BoardVO selectBoardOne(int no);
 	public int updateBoard(BoardVO obj);
 	public int deleteBoard(BoardVO obj);

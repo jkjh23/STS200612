@@ -13,6 +13,7 @@
 <body>
 	<div class="container">
 		<a href="/admin/item">물품목록보기</a>
+		<a href="/admin/itemorder">판매량</a>
 		<a href="/admin/member">회원관리</a>
 		<a href="/admin/board">게시물관리</a>
 	</div>

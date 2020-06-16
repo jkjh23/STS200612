@@ -28,6 +28,12 @@ public class BoardDAOImpl implements BoardDAO{
 		// TODO Auto-generated method stub
 		return sqlFactory.openSession().selectList("Board.selectList", map);
 	}
+	
+	@Override
+	public List<BoardVO> selectBoard2(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlFactory.openSession().selectList("Board.selectList2", map);
+	}
 
 	@Override
 	public BoardVO selectBoardOne(int no) {

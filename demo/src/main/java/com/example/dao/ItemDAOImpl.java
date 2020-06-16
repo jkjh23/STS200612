@@ -55,4 +55,9 @@ public class ItemDAOImpl implements ItemDAO{
 		// TODO Auto-generated method stub
 		return sqlFactory.openSession().update("Item.updateItemBatch", list);
 	}
+
+	@Override
+	public int deleteItemOne(int no) {
+		return sqlFactory.openSession().delete("Item.deleteItemOne", no);
+	}
 }

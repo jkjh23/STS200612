@@ -28,13 +28,6 @@
 		SELECT * FROM DUAL
 	</select>
 	
-	<delete id="deleteItemBatch" parameterType="int">
-			<foreach open="DELETE FROM ITEM WHERE ITEMNO IN(" close=")"
-						   collection="array" item="tmp" separator=",">
-				#{tmp}
-			</foreach>
-	</delete>
-	
 	<select id="selectItemWhere" resultType="com.example.vo.ItemVO"  parameterType="int">
 		SELECT * FROM ITEM WHERE ITEMNO IN(
 		<foreach collection="array" item="tmp" separator=","> 
@@ -42,6 +35,17 @@
 		</foreach>
 		)
 	</select>
+	
+	<delete id="deleteItemBatch" parameterType="int">
+			<foreach open="DELETE FROM ITEM WHERE ITEMNO IN(" close=")"
+						   collection="array" item="tmp" separator=",">
+				#{tmp}
+			</foreach>
+	</delete>
+	
+	<delete id="deleteItemOne" parameterType="int">
+		DELETE FROM ITEM WHERE ITEMNO = #{no}
+	</delete>
 	
 	<update id="updateItemBatch" parameterType="java.util.List">
 		UPDATE ITEM SET
