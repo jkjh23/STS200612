@@ -10,6 +10,17 @@ public class BoardVO {
 	private String brd_id = null;
 	private long brd_hit = 0L;
 	private String brd_date = null;
+
+	
+//	private String[] tmp = null;	// 관심분야, 나중에 지울 항목
+//	
+//	public String[] getTmp() {
+//		return tmp;
+//	}
+//	public void setTmp(String[] tmp) {
+//		this.tmp = tmp;
+//	}
+	
 	
 	public long getBrd_no() {
 		return brd_no;

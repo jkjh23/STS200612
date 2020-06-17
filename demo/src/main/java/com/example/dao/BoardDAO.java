@@ -10,7 +10,7 @@ public interface BoardDAO {
 	public List<BoardVO> selectBoard(HashMap<String, Object> map);
 	public List<BoardVO> selectBoard2(HashMap<String, Object> map);
 	public BoardVO selectBoardOne(int no);
-	public int updateBoard(BoardVO obj);
+	public int updateBoardOne(BoardVO obj);
 	public int deleteBoard(BoardVO obj);
 	
 	public int countBoard();		// 전체 개수 구하기
@@ -21,4 +21,7 @@ public interface BoardDAO {
 	// Board.insertBatch mapper
 	
 	public BoardVO selectBoardImg(int no);
+	
+	public int selectBoardPrev(int no);
+	public int selectBoardNext(int no);
 }

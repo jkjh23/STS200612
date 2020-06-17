@@ -19,38 +19,32 @@ public class BoardDAOImpl implements BoardDAO{
 
 	@Override
 	public int insertBoard(BoardVO obj) {
-		// TODO Auto-generated method stub
 		return sqlFactory.openSession().insert("Board.insertBoard", obj);
 	}
 
 	@Override
 	public List<BoardVO> selectBoard(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
 		return sqlFactory.openSession().selectList("Board.selectList", map);
 	}
 	
 	@Override
 	public List<BoardVO> selectBoard2(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
 		return sqlFactory.openSession().selectList("Board.selectList2", map);
 	}
 
 	@Override
 	public BoardVO selectBoardOne(int no) {
-		// TODO Auto-generated method stub
 		return sqlFactory.openSession().selectOne("Board.selectBoardOne", no);
 	}
 
 	@Override
-	public int updateBoard(BoardVO obj) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateBoardOne(BoardVO obj) {
+		return sqlFactory.openSession().update("Board.updateBoardOne", obj);
 	}
 
 	@Override
 	public int deleteBoard(BoardVO obj) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlFactory.openSession().delete("Board.deleteBoard", obj);
 	}
 
 	@Override
@@ -71,6 +65,16 @@ public class BoardDAOImpl implements BoardDAO{
 	@Override
 	public BoardVO selectBoardImg(int no) {
 		return sqlFactory.openSession().selectOne("Board.selectBoardImg", no);
+	}
+
+	@Override
+	public int selectBoardPrev(int no) {
+		return sqlFactory.openSession().selectOne("Board.selectBoardPrev", no);
+	}
+
+	@Override
+	public int selectBoardNext(int no) {
+		return sqlFactory.openSession().selectOne("Board.selectBoardNext", no);
 	}
 	
 }

@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -16,12 +17,18 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
+
+// JPA할 때 쓴 2개 ↓
 @EntityScan(basePackages = {"com.example.entity"})	// entity 위치
 @EnableJpaRepositories(basePackages = {"com.example.repository"})	// repository 위치
+
 @ComponentScan({
 	"com.example.controller",
 	"com.example.rest_controller",	
 	"com.example.dao"})  // controller를 찾을 수 있도록 패키지명 등록
+
+@MapperScan({"com.example.mapper"})
+
 public class DemoApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
