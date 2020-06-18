@@ -21,7 +21,6 @@
 		<c:if test="${sessionScope.SESSION_ID ne null}">
 			<a href="/member/logout">로그아웃</a>
 			<a href="/member/edit">회원정보수정</a>
-			<a href="/board/insert">게시판 글쓰기</a>
 			<a href="/board/list">게시판</a>
 			<a href="/admin/item">판매물품</a>
 			<a href="/admin/member">회원목록</a>

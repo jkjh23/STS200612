@@ -12,11 +12,11 @@ import com.example.vo.BoardVO;
 
 @Service
 @Transactional
-public class BoardDAOImpl implements BoardDAO{
+public class BoardDAOImpl implements BoardDAO {
 
-	@Autowired  //@Bean으로 만들어진 객체를 받아옴.
+	@Autowired
 	private SqlSessionFactory sqlFactory = null;
-
+	
 	@Override
 	public int insertBoard(BoardVO obj) {
 		return sqlFactory.openSession().insert("Board.insertBoard", obj);
@@ -26,11 +26,6 @@ public class BoardDAOImpl implements BoardDAO{
 	public List<BoardVO> selectBoard(HashMap<String, Object> map) {
 		return sqlFactory.openSession().selectList("Board.selectList", map);
 	}
-	
-	@Override
-	public List<BoardVO> selectBoard2(HashMap<String, Object> map) {
-		return sqlFactory.openSession().selectList("Board.selectList2", map);
-	}
 
 	@Override
 	public BoardVO selectBoardOne(int no) {
@@ -38,7 +33,7 @@ public class BoardDAOImpl implements BoardDAO{
 	}
 
 	@Override
-	public int updateBoardOne(BoardVO obj) {
+	public int updateBoard(BoardVO obj) {
 		return sqlFactory.openSession().update("Board.updateBoardOne", obj);
 	}
 
@@ -48,8 +43,8 @@ public class BoardDAOImpl implements BoardDAO{
 	}
 
 	@Override
-	public int countBoard() {
-		return sqlFactory.openSession().selectOne("Board.count");
+	public int countBoard(String text) {
+		return sqlFactory.openSession().selectOne("Board.count", text);
 	}
 
 	@Override
@@ -76,5 +71,5 @@ public class BoardDAOImpl implements BoardDAO{
 	public int selectBoardNext(int no) {
 		return sqlFactory.openSession().selectOne("Board.selectBoardNext", no);
 	}
-	
+
 }

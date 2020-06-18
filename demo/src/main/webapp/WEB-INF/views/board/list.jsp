@@ -18,12 +18,17 @@
 		
 		<div class="form-inline">
 			<div style="margin-right:30px">
+				<a href="${pageContext.request.contextPath}/board/list" class="btn btn-success">전체목록</a>
 				<a href="${pageContext.request.contextPath}/board/insert" class="btn btn-success">글쓰기</a>
+				<a href="${pageContext.request.contextPath}/board/insertbatch" class="btn btn-success">일괄등록</a>
+				<a href="${pageContext.request.contextPath}/" class="btn btn-success">홈으로</a>
 			</div>
 			
-			<form action="" method="post">
-				<input type="text" class="form-control" placeholder="검색어"/>
-				<input type="submit" class="btn btn-success" value="검색"/>
+			<!-- 검색은 post보다 get으로 보내는 게 좋음 -->
+			<form action="${pageContext.request.contextPath}/board/list" method="get">
+				<input type="hidden" name="page" value="1" />
+				<input type="text" name="text" class="form-control" placeholder="검색어" />
+				<input type="submit" class="btn btn-success" value="검색" />
 			</form>
 		</div>
 		
@@ -39,6 +44,13 @@
 			</thead>
 			
 			<tbody>
+				<c:if test="${empty list}">
+					<tr>
+						<td colspan="5" align=center>검색결과가 없습니다.</td>
+					</tr>
+				</c:if>
+		
+				<c:if test="${!empty list}">
 				<c:forEach var="tmp" items="${list}" >
 				<tr>
 					<td>${tmp.brd_no}</td>
@@ -54,21 +66,30 @@
 					</td>
 				</tr>
 				</c:forEach>
+				</c:if>
 			</tbody>
 		</table>
-				<nav aria-label="Page navigation example">
-					<ul class="pagination">
-					    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-					    
-					    <c:forEach var="i" begin="1" end="${cnt}" step="1">
-					    	<li class="page-item"><a class="page-link" href="/board/list?page=${i}">${i}</a></li>
-					    </c:forEach>
-						    
-					    <li class="page-item"><a class="page-link" href="#">Next</a></li> &nbsp
-					   	<a class="btn btn-primary" href="/board/insertbatch" role="button">일괄등록 </a> &nbsp
-					   	<a class="btn btn-primary" href="/" role="button">홈으로</a>
-					</ul>
-				</nav>
+		
+		<div id="pagination-div"></div>
+
 	</div>
+	
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
+
+	<script>
+		$(function(){
+			$('#pagination-div').twbsPagination({
+		        totalPages: Number('${cnt}'), /* 전체 페이지 수*/
+		        visiblePages: 10, /*화면에 표시할 페이지 수 */
+		        startPage : Number('${param.page}'), /* 주소창에 ~~/board/list?page=1 */
+		        initiateStartPageClick : false,
+		        onPageClick: function (event, page) {
+		             window.location.href = "/board/list?page="+page+"&text=${param.text}";
+		        }
+		    });
+		})
+	</script>
+	
 </body>
 </html>

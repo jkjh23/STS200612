@@ -3,17 +3,18 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
 <mapper namespace="Board">
-	
+
 	<resultMap type="com.example.vo.BoardVO" id="img1">
 		<result column="BRD_NO" property="brd_no"/>
-		<result column="BRD_IMG" property="brd_img" jdbcType="BLOB" javaType="[B"/>
+		<result column="BRD_IMG" property="brd_img" 
+			jdbcType="BLOB" javaType="[B"/>
 	</resultMap>
 
 	<select id="selectBoardImg" parameterType="int" resultMap="img1">
-		SELECT BRD_NO, BRD_IMG FROM BOARD
-		WHERE BRD_NO = #{brd_no}
+		SELECT BRD_NO, BRD_IMG FROM BOARD 
+		WHERE BRD_NO = #{no}
 	</select>
 
 	<insert id="insertBoard" parameterType="com.example.vo.BoardVO">
@@ -22,34 +23,6 @@
 		VALUES (SEQ_BOARD_NO.NEXTVAL, #{brd_title}, #{brd_content}, 
 			#{brd_img, jdbcType=BLOB}, #{brd_id}, #{brd_hit}, SYSDATE )
 	</insert>
-	
-	<select id="selectList" parameterType="map" resultType="com.example.vo.BoardVO">
-		SELECT * FROM
-			(SELECT 
-				BRD_NO, BRD_TITLE, BRD_ID, BRD_HIT, BRD_DATE, 
-				ROW_NUMBER() OVER (ORDER BY BRD_NO DESC) ROWN 
-			FROM 
-				BOARD)
-		WHERE ROWN BETWEEN #{start} AND #{end}		 
-	</select>
-	
-	<select id="selectList2" parameterType="map" resultType="com.example.vo.BoardVO">
-		SELECT * FROM
-			(SELECT 
-				BRD_NO, BRD_TITLE, BRD_CONTENT, BRD_ID, BRD_HIT, BRD_DATE, 
-				ROW_NUMBER() OVER (ORDER BY BRD_NO DESC) ROWN 
-			FROM 
-				BOARD) 
-		WHERE ROWN BETWEEN #{start} AND #{end}
-	</select>
-
-	<select id="count" resultType="int">
-		SELECT COUNT(*) FROM BOARD
-	</select>
-	
-	<select id="selectBoardOne" parameterType="int" resultType="com.example.vo.BoardVO">
-		SELECT * FROM BOARD WHERE BRD_NO = #{no}
-	</select>
 	
 	<select id="insertBatch" parameterType="java.util.List">
 		INSERT ALL 
@@ -61,10 +34,37 @@
 		SELECT * FROM DUAL
 	</select>
 	
+	<select id="selectList" parameterType="map" 
+			resultType="com.example.vo.BoardVO">
+		SELECT * FROM
+			(SELECT 
+				BRD_NO, BRD_TITLE, BRD_ID, BRD_HIT, BRD_DATE, 
+				ROW_NUMBER() OVER (ORDER BY BRD_NO DESC) ROWN 
+			FROM 
+				BOARD
+			WHERE
+				BRD_TITLE LIKE '%' || #{text} || '%')
+		WHERE ROWN BETWEEN #{start} AND #{end}		 
+	</select>
+
+	<select id="count" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM BOARD
+		WHERE BRD_TITLE LIKE '%' || #{text} || '%'
+	</select>
+	
+	<select id="selectBoardOne" parameterType="int" 
+			resultType="com.example.vo.BoardVO">
+		SELECT * FROM BOARD WHERE BRD_NO = #{no} 
+	</select>
+	
 	<update id="updateHit" parameterType="int">
 		UPDATE BOARD SET BRD_HIT = BRD_HIT + 1
-		WHERE BRD_NO=#{no}
+		WHERE BRD_NO = #{no}
 	</update>
+	
+	<delete id="deleteBoard" parameterType="com.example.vo.BoardVO">
+		DELETE FROM BOARD WHERE BRD_NO = #{brd_no}
+	</delete>
 	
 	<update id="updateBoardOne" parameterType="com.example.vo.BoardVO">
 		UPDATE 
@@ -72,23 +72,20 @@
 		SET 
 			BRD_TITLE=#{brd_title}, BRD_CONTENT=#{brd_content}
 			<if test="brd_img != null">
-				, BRD_IMG=#{brd_img, jdbcType=BLOB}
+			,BRD_IMG=#{brd_img, jdbcType=BLOB}
 			</if>
 		WHERE
-			BRD_NO = #{brd_no}	
+			BRD_NO = #{brd_no}
 	</update>
 	
-	<delete id="deleteBoard" parameterType="com.example.vo.BoardVO">
-		DELETE FROM BOARD WHERE BRD_NO = #{brd_no}
-	</delete>
 	
 	<select id="selectBoardPrev" parameterType="int" resultType="int">
 		SELECT NVL(MAX(BRD_NO),0) FROM BOARD 
 		WHERE BRD_NO <![CDATA[ < ]]> #{brd_no}
 	</select>
-	
-	<select id="selectBoardNext" parameterType="int" resultType="int">
-		SELECT NVL(MIN(BRD_NO),0) FROM BOARD WHERE BRD_NO <![CDATA[ > ]]> #{brd_no}
-	</select>	
 
+	<select id="selectBoardNext" parameterType="int" resultType="int">
+		SELECT NVL(MIN(BRD_NO),0) FROM BOARD 
+		WHERE BRD_NO <![CDATA[ > ]]> #{brd_no}
+	</select>	
 </mapper>
