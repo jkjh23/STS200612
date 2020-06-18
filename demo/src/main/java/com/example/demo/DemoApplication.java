@@ -22,10 +22,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan(basePackages = {"com.example.entity"})	// entity 위치
 @EnableJpaRepositories(basePackages = {"com.example.repository"})	// repository 위치
 
-@ComponentScan({
-	"com.example.controller",
-	"com.example.rest_controller",	
-	"com.example.dao"})  // controller를 찾을 수 있도록 패키지명 등록
+@ComponentScan({ 
+	"com.example.interceptor",
+	"com.example.controller", 
+	"com.example.rest_controller", 
+	"com.example.dao" })  // controller를 찾을 수 있도록 패키지명 등록
 
 @MapperScan({"com.example.mapper"})
 
