@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,7 +30,7 @@ public class RestBoardController {
 		map2.put("start", (page*10)-9);
 		map2.put("end", page*10);
 		
-		List<BoardVO> list = bDAO.selectBoard2(map2);
+		List<BoardVO> list = bDAO.selectBoard(map2);
 		
 		map.put("ret", list);
 		
